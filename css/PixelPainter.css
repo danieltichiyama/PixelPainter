@@ -1,0 +1,33 @@
+#pixelPainter {
+    display: grid;
+    grid-template-columns: repeat(100, 5px);
+    border: 1px black solid;
+    width:500px;
+}
+
+.pixel {
+    height: 5px;
+    width: 5px;
+    /* border: 1px black solid; */
+    background: white;
+    margin: 0 0 0 0;
+}
+
+#colorPicker {
+    height: 100px;
+    width: 200px;
+    display: grid;
+    grid-template-columns: repeat(10,20px);
+    border: 1px solid orange;
+}
+
+button {
+    height: 100px;
+    width: 100px;
+    margin: 10px 10px 10px 0;
+}
+
+button:hover {
+    background: blue;
+    color: white;
+}
