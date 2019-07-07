@@ -6,7 +6,7 @@ body {
 #pixelPainter {
   display: grid;
   grid-template-columns: repeat(10, 10px);
-  border: 1px rgba(0, 0, 0, 0.2) solid;
+  border: 3px rgba(0, 0, 0, 0.2) solid;
   width: fit-content;
   height: fit-content;
   margin-bottom: 10px;
@@ -27,16 +27,27 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 20px);
   /* border: 1px solid orange; */
-  grid-column: 1/2;
-  grid-row: 2/3;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   padding: 1px;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
+button {
   background: blue;
   color: white;
+  border-radius: 20px;
+  height: 30px;
+  width: 100px;
+  align-content: center;
+}
+
+button :hover {
+  background: white;
+  color: blue;
+}
+
+button:focus {
+  outline: 0;
 }
 
 h1 {
@@ -74,4 +85,23 @@ h1 {
 
 .color {
   border: white 1px solid;
+}
+
+#menuBox {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  border: 1px orange dotted;
+  justify-content: flex-start;
+  padding: 20px;
+  align-items: center;
+}
+
+#menuBox button {
+  margin-bottom: 10px;
+}
+
+#colorPicker {
+  margin-bottom: 20px;
 }

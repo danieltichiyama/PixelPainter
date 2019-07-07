@@ -51,7 +51,7 @@ function createCanvas(width, height) {
         for (let i = 0; i < pixArr.length; i++) {
           pixArr[i].addEventListener("mouseover", changeColor);
         }
-        this.style.background = imaNoColor;
+        this.style.background = imaNoIro;
       });
       pix.addEventListener("mouseup", function() {
         let pixArr = document.querySelectorAll(".pixel");
@@ -62,10 +62,16 @@ function createCanvas(width, height) {
       pixelPainter.appendChild(pix);
     }
   }
+  //   let pixArr = document.querySelectorAll(".pixel");
+  //   for (let i = 1; i < pixArr.length; i++) {
+  //     if (pixArr[i - 1].style.backgroundImage === "none") {
+  //       pixArr[i].style.backgroundImage =
+  //         "url(https://images.homedepot-static.com/productImages/fc91cb23-b6db-4d32-b02a-f1ed61dd39a8/svn/folkstone-matte-formica-laminate-sheets-009271258408000-64_400_compressed.jpg)";
+  //     } else {
+  //       pixArr[i].style.backgroundImage = "none";
+  //     }
+  //   }
 }
-
-createCanvas(100, 65);
-//canvas sizing div-end
 
 pixelPainter.addEventListener("mouseleave", function() {
   let pixArr = document.querySelectorAll(".pixel");
@@ -74,13 +80,22 @@ pixelPainter.addEventListener("mouseleave", function() {
   }
 });
 
+createCanvas(101, 65);
+//canvas functionality-end
+
+//menu-start
+const menuBox = document.createElement("div");
+menuBox.id = "menuBox";
+sizer.after(menuBox);
+
+//color-picker functionality-start
 function changeColor() {
-  this.style.background = imaNoColor;
+  this.style.background = imaNoIro;
 }
 
 const colorPicker = document.createElement("div");
 colorPicker.id = "colorPicker";
-document.body.appendChild(colorPicker);
+menuBox.appendChild(colorPicker);
 
 const colorArray = [
   "red",
@@ -95,7 +110,7 @@ const colorArray = [
   "pink"
 ];
 
-let imaNoColor = "black";
+let imaNoIro = "black";
 
 for (let i = 0; i < 5; i++) {
   for (let j = 0; j < 10; j++) {
@@ -110,19 +125,22 @@ for (let i = 0; i < 5; i++) {
 }
 
 function atarashiColor() {
-  imaNoColor = this.style.background;
+  imaNoIro = this.style.background;
 }
 
 let clearButton = document.createElement("button");
 clearButton.id = "clear";
 clearButton.innerHTML = "CLEAR";
 clearButton.addEventListener("click", clearCanvas);
-document.body.appendChild(clearButton);
+menuBox.appendChild(clearButton);
 
+//color-picker functionality-end
+
+//additional functions-start
 function clearCanvas() {
   let pixArr = document.querySelectorAll(".pixel");
   for (let i = 0; i < pixArr.length; i++) {
-    pixArr[i].style.background = "white";
+    pixArr[i].style.background = "none";
   }
 }
 
@@ -130,11 +148,16 @@ let eraserButton = document.createElement("button");
 eraserButton.id = "eraser";
 eraserButton.innerHTML = "ERASER";
 eraserButton.addEventListener("click", eraserTool);
-document.body.appendChild(eraserButton);
+menuBox.appendChild(eraserButton);
 
 function eraserTool() {
-  imaNoColor = "white";
+  imaNoIro = "white";
   pixelPainter.removeEventListener("mouseleave");
 }
+//additional functions-end
 
-console.log(document.getElementById("widthInput"));
+/*Things to add:
+1. a recall button (need to store the memory of all the .pixel background colors)
+2.
+
+*/
