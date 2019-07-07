@@ -158,6 +158,9 @@ function eraserTool() {
 
 /*Things to add:
 1. a recall button (need to store the memory of all the .pixel background colors)
-2.
-
+2. a fill tool (it would propogate the color to other cells if they are not filled with a color already. up, down, left, and right);
+3. a checkered background (will need to figure out a way to do it with even-numbered dimensions, and also will need to update the clear function and the eraser)
+4. make it so the eraser doesn't exit out even if the cursor leaves the canvas.
+5. add special cursors for all the tools
+6. make it responsive for mobile.
 */
