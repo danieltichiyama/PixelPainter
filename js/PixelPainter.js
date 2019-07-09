@@ -40,37 +40,20 @@ resizeButton.addEventListener("click", function() {
 sizer.appendChild(resizeButton);
 
 function createCanvas(width, height) {
-  pixelPainter.style.gridTemplateColumns = "repeat(" + width + ",10px)";
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
+  for (let i = 0; i < height; i++) {
+    let row = document.createElement("div");
+    row.className = "row";
+    row.id = i;
+    for (let j = 0; j < width; j++) {
       let pix = document.createElement("div");
       pix.className = "pixel";
-      pix.id = i + "," + j;
-      pix.addEventListener("mousedown", function() {
-        let pixArr = document.querySelectorAll(".pixel");
-        for (let i = 0; i < pixArr.length; i++) {
-          pixArr[i].addEventListener("mouseover", changeColor);
-        }
-        this.style.background = imaNoIro;
-      });
-      pix.addEventListener("mouseup", function() {
-        let pixArr = document.querySelectorAll(".pixel");
-        for (let i = 0; i < pixArr.length; i++) {
-          pixArr[i].removeEventListener("mouseover", changeColor);
-        }
-      });
-      pixelPainter.appendChild(pix);
+      pix.dataset.x = j;
+      pix.dataset.y = i;
+      pix.dataset.color = "none";
+      row.appendChild(pix);
     }
+    pixelPainter.appendChild(row);
   }
-  //   let pixArr = document.querySelectorAll(".pixel");
-  //   for (let i = 1; i < pixArr.length; i++) {
-  //     if (pixArr[i - 1].style.backgroundImage === "none") {
-  //       pixArr[i].style.backgroundImage =
-  //         "url(https://images.homedepot-static.com/productImages/fc91cb23-b6db-4d32-b02a-f1ed61dd39a8/svn/folkstone-matte-formica-laminate-sheets-009271258408000-64_400_compressed.jpg)";
-  //     } else {
-  //       pixArr[i].style.backgroundImage = "none";
-  //     }
-  //   }
 }
 
 pixelPainter.addEventListener("mouseleave", function() {
@@ -128,6 +111,36 @@ function atarashiColor() {
   imaNoIro = this.style.background;
 }
 
+let brushButton = document.createElement("button");
+brushButton.id = "brush";
+brushButton.innerHTML = "BRUSH";
+brushButton.addEventListener("click", brush);
+menuBox.appendChild(brushButton);
+
+function brush() {
+  let pixArr = document.querySelectorAll(".pixel");
+  for (i = 0; i < pixArr.length; i++) {
+    pixArr[i].addEventListener("mousedown", brush1);
+    pixArr[i].addEventListener("mouseup", brush2);
+  }
+}
+
+function brush1() {
+  let pixArr = document.querySelectorAll(".pixel");
+  for (let i = 0; i < pixArr.length; i++) {
+    pixArr[i].addEventListener("mouseover", changeColor);
+  }
+  this.style.background = imaNoIro;
+  this.dataset.color = imaNoIro;
+}
+
+function brush2() {
+  let pixArr = document.querySelectorAll(".pixel");
+  for (let i = 0; i < pixArr.length; i++) {
+    pixArr[i].removeEventListener("mouseover", changeColor);
+  }
+}
+
 let clearButton = document.createElement("button");
 clearButton.id = "clear";
 clearButton.innerHTML = "CLEAR";
@@ -141,6 +154,7 @@ function clearCanvas() {
   let pixArr = document.querySelectorAll(".pixel");
   for (let i = 0; i < pixArr.length; i++) {
     pixArr[i].style.background = "none";
+    pixArr[i].dataset.color = "none";
   }
 }
 
@@ -151,10 +165,57 @@ eraserButton.addEventListener("click", eraserTool);
 menuBox.appendChild(eraserButton);
 
 function eraserTool() {
-  imaNoIro = "white";
-  pixelPainter.removeEventListener("mouseleave");
+  imaNoIro = "none";
+  pixelPainter.removeEventListener("mouseleave", function() {
+    let pixArr = document.querySelectorAll(".pixel");
+    for (let i = 0; i < pixArr.length; i++) {
+      pixArr[i].removeEventListener("mouseover", changeColor);
+    }
+  });
 }
 //additional functions-end
+
+//sandbox-start
+
+let fillButton = document.createElement("button");
+fillButton.id = "fillButton";
+fillButton.innerHTML = "FILL";
+fillButton.addEventListener("click", function() {
+  let pixArr = document.querySelectorAll(".pixel");
+  for (i = 0; i < pixArr.length; i++) {
+    pixArr[i].addEventListener("click", fill);
+    pixArr[i].removeEventListener("mousedown", brush1);
+    pixArr[i].removeEventListener("mouseup", brush2);
+  }
+});
+menuBox.appendChild(fillButton);
+
+function fill() {
+  let preSibling = this.previousSibling;
+  let nextSibling = this.nextSibling;
+
+  while (preSibling) {
+    if (preSibling.style.backgroundColor !== this.style.backgroundColor) {
+      preSibling = false;
+    } else {
+      preSibling.style.backgroundColor = imaNoIro;
+      preSibling = preSibling.previousSibling;
+    }
+  }
+
+  while (nextSibling) {
+    if (nextSibling.style.backgroundColor !== this.style.backgroundColor) {
+      nextSibling = false;
+    } else {
+      nextSibling.style.backgroundColor = imaNoIro;
+      nextSibling = nextSibling.nextSibling;
+    }
+  }
+
+  this.style.backgroundColor = imaNoIro;
+}
+
+//sandbox-end
 
 /*Things to add:
 1. a recall button (need to store the memory of all the .pixel background colors)
