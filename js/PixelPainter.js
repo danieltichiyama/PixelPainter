@@ -191,28 +191,132 @@ fillButton.addEventListener("click", function() {
 menuBox.appendChild(fillButton);
 
 function fill() {
+  let x = this.dataset.x;
   let preSibling = this.previousSibling;
   let nextSibling = this.nextSibling;
-
+  let upSibling = this.parentNode.previousSibling.childNodes[x];
+  let downSibling = this.parentNode.nextSibling.childNodes[x];
+  //hor-left
   while (preSibling) {
     if (preSibling.style.backgroundColor !== this.style.backgroundColor) {
       preSibling = false;
     } else {
       preSibling.style.backgroundColor = imaNoIro;
+      let a = preSibling.dataset.x;
+      let thisUpSibling = preSibling.parentNode.previousSibling.childNodes[a];
+      while (thisUpSibling) {
+        if (
+          thisUpSibling.style.backgroundColor !== this.style.backgroundColor
+        ) {
+          thisUpSibling = false;
+        } else {
+          thisUpSibling.style.backgroundColor = imaNoIro;
+          if (thisUpSibling.parentNode.previousSibling) {
+            thisUpSibling =
+              thisUpSibling.parentNode.previousSibling.childNodes[a];
+          } else {
+            thisUpSibling = false;
+          }
+        }
+      }
+
+      let b = preSibling.dataset.x;
+      let thisDownSibling = preSibling.parentNode.nextSibling.childNodes[b];
+      while (thisDownSibling) {
+        if (
+          thisDownSibling.style.backgroundColor !== this.style.backgroundColor
+        ) {
+          thisDownSibling = false;
+        } else {
+          thisDownSibling.style.backgroundColor = imaNoIro;
+          if (thisDownSibling.parentNode.nextSibling) {
+            thisDownSibling =
+              thisDownSibling.parentNode.nextSibling.childNodes[b];
+          } else {
+            thisDownSibling = false;
+          }
+        }
+      }
       preSibling = preSibling.previousSibling;
     }
   }
-
+  //hor-right
   while (nextSibling) {
     if (nextSibling.style.backgroundColor !== this.style.backgroundColor) {
       nextSibling = false;
     } else {
       nextSibling.style.backgroundColor = imaNoIro;
+      let a = nextSibling.dataset.x;
+      let thisUpSibling = nextSibling.parentNode.previousSibling.childNodes[a];
+      while (thisUpSibling) {
+        if (
+          thisUpSibling.style.backgroundColor !== this.style.backgroundColor
+        ) {
+          thisUpSibling = false;
+        } else {
+          thisUpSibling.style.backgroundColor = imaNoIro;
+          if (thisUpSibling.parentNode.previousSibling) {
+            thisUpSibling =
+              thisUpSibling.parentNode.previousSibling.childNodes[a];
+          } else {
+            thisUpSibling = false;
+          }
+        }
+      }
+      let b = nextSibling.dataset.x;
+      let thisDownSibling = nextSibling.parentNode.nextSibling.childNodes[b];
+      while (thisDownSibling) {
+        if (
+          thisDownSibling.style.backgroundColor !== this.style.backgroundColor
+        ) {
+          thisDownSibling = false;
+        } else {
+          thisDownSibling.style.backgroundColor = imaNoIro;
+          if (thisDownSibling.parentNode.nextSibling) {
+            thisDownSibling =
+              thisDownSibling.parentNode.nextSibling.childNodes[b];
+          } else {
+            thisDownSibling = false;
+          }
+        }
+      }
       nextSibling = nextSibling.nextSibling;
+    }
+  }
+  //vert-up
+  while (upSibling) {
+    if (upSibling.style.backgroundColor !== this.style.backgroundColor) {
+      upSibling = false;
+    } else {
+      upSibling.style.backgroundColor = imaNoIro;
+      if (upSibling.parentNode.previousSibling) {
+        upSibling = upSibling.parentNode.previousSibling.childNodes[x];
+      } else {
+        upSibling = false;
+      }
+    }
+  }
+  //vert-down
+  while (downSibling) {
+    if (downSibling.style.backgroundColor !== this.style.backgroundColor) {
+      downSibling = false;
+    } else {
+      downSibling.style.backgroundColor = imaNoIro;
+      if (downSibling.parentNode.nextSibling) {
+        downSibling = downSibling.parentNode.nextSibling.childNodes[x];
+      } else {
+        downSibling = false;
+      }
     }
   }
 
   this.style.backgroundColor = imaNoIro;
+}
+
+function fill2() {
+  console.log(this.parentNode);
+  let upSibling = this.parentNode.previousSibling.childNodes;
+  console.log(upSibling);
 }
 
 //sandbox-end
