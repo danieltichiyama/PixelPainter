@@ -317,13 +317,6 @@ function fill() {
 
   this.style.backgroundColor = imaNoIro;
 }
-
-function fill2() {
-  console.log(this.parentNode);
-  let upSibling = this.parentNode.previousSibling.childNodes;
-  console.log(upSibling);
-}
-
 //sandbox-end
 
 /*Things to add:
