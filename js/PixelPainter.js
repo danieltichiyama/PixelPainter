@@ -13,6 +13,7 @@ const widthInput = document.createElement("input");
 widthInput.type = "number";
 widthInput.id = "widthInput";
 widthInput.placeholder = 100;
+widthInput.value = 100;
 sizer.appendChild(widthInput);
 
 const heightText = document.createElement("span");
@@ -23,11 +24,15 @@ const heightInput = document.createElement("input");
 heightInput.type = "number";
 heightInput.id = "heightInput";
 heightInput.placeholder = 65;
+heightInput.value = 65;
 sizer.appendChild(heightInput);
 
 function getWAndH() {
   pixelPainter.innerHTML = "";
-  createCanvas(widthInput.value, widthInput.value);
+  if (widthInput.value === undefined || heightInput.value === undefined) {
+    alert("Please specify a width and a height");
+  }
+  createCanvas(widthInput.value, heightInput.value);
 }
 
 const resizeButton = document.createElement("button");
