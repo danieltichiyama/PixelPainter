@@ -1,0 +1,108 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+#pixelPainter {
+  border: 3px rgba(0, 0, 0, 0.2) solid;
+  width: fit-content;
+  height: fit-content;
+  margin-bottom: 10px;
+\
+}
+
+.row {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
+.pixel {
+  height: 10px;
+  width: 10px;
+  background-color:none;
+  margin: 0 0 0 0;
+}
+
+#colorPicker {
+  height: 100px;
+  width: 200px;
+  display: grid;
+  grid-template-columns: repeat(10, 20px);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  padding: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background: blue;
+  color: white;
+  border-radius: 20px;
+  height: 30px;
+  width: 100px;
+  align-content: center;
+}
+
+button :hover {
+  background: white;
+  color: blue;
+}
+
+button:focus {
+  outline: 0;
+}
+
+h1 {
+  grid-row: 1/2;
+}
+
+#sizer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+  margin-bottom: 10px;
+  grid-column: 2/3;
+}
+
+#widthInput {
+  width: 75px;
+  height: 25px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+#heightInput {
+  width: 75px;
+  height: 25px;
+  text-align: right;
+  margin-right: 25px;
+}
+
+#sizer span {
+  margin-right: 5px;
+}
+
+.color {
+  border: white 1px solid;
+}
+
+#menuBox {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  justify-content: flex-start;
+  padding: 20px;
+  align-items: center;
+}
+
+#menuBox button {
+  margin-bottom: 10px;
+}
+
+#colorPicker {
+  margin-bottom: 20px;
+}
