@@ -55,6 +55,7 @@ function createCanvas(width, height) {
       pix.dataset.x = j;
       pix.dataset.y = i;
       pix.dataset.color = "none";
+      pix.id = "pixel" + j + "," + i;
       row.appendChild(pix);
     }
     pixelPainter.appendChild(row);
@@ -76,11 +77,7 @@ const menuBox = document.createElement("div");
 menuBox.id = "menuBox";
 sizer.after(menuBox);
 
-//color-picker functionality-start
-function changeColor() {
-  this.style.background = imaNoIro;
-}
-
+//color-picker-start
 const colorPicker = document.createElement("div");
 colorPicker.id = "colorPicker";
 menuBox.appendChild(colorPicker);
@@ -98,8 +95,6 @@ const colorArray = [
   "pink"
 ];
 
-let imaNoIro = "black";
-
 for (let i = 0; i < 5; i++) {
   for (let j = 0; j < 10; j++) {
     let col = document.createElement("div");
@@ -115,12 +110,50 @@ for (let i = 0; i < 5; i++) {
 function atarashiColor() {
   imaNoIro = this.style.background;
 }
+// color-picker-end
 
 let brushButton = document.createElement("button");
 brushButton.id = "brush";
 brushButton.innerHTML = "BRUSH";
 brushButton.addEventListener("click", brush);
+brushButton.removeEventListener("click", fill);
 menuBox.appendChild(brushButton);
+
+let clearButton = document.createElement("button");
+clearButton.id = "clear";
+clearButton.innerHTML = "CLEAR";
+clearButton.addEventListener("click", clearCanvas);
+menuBox.appendChild(clearButton);
+
+let eraserButton = document.createElement("button");
+eraserButton.id = "eraser";
+eraserButton.innerHTML = "ERASER";
+eraserButton.addEventListener("click", eraserTool);
+menuBox.appendChild(eraserButton);
+
+let fillButton = document.createElement("button");
+fillButton.id = "fillButton";
+fillButton.innerHTML = "FILL";
+fillButton.addEventListener("click", function() {
+  let pixArr = document.querySelectorAll(".pixel");
+  for (i = 0; i < pixArr.length; i++) {
+    pixArr[i].addEventListener("click", fill);
+    pixArr[i].addEventListener("click", function() {
+      maeNoIro = this.style.backgroundColor;
+    });
+    pixArr[i].removeEventListener("mousedown", brush1);
+    pixArr[i].removeEventListener("mouseup", brush2);
+  }
+});
+menuBox.appendChild(fillButton);
+// menu-end
+
+let imaNoIro = "black";
+let maeNoIro = "";
+
+function changeColor() {
+  this.style.background = imaNoIro;
+}
 
 function brush() {
   let pixArr = document.querySelectorAll(".pixel");
@@ -146,14 +179,6 @@ function brush2() {
   }
 }
 
-let clearButton = document.createElement("button");
-clearButton.id = "clear";
-clearButton.innerHTML = "CLEAR";
-clearButton.addEventListener("click", clearCanvas);
-menuBox.appendChild(clearButton);
-
-//color-picker functionality-end
-
 //additional functions-start
 function clearCanvas() {
   let pixArr = document.querySelectorAll(".pixel");
@@ -162,12 +187,6 @@ function clearCanvas() {
     pixArr[i].dataset.color = "none";
   }
 }
-
-let eraserButton = document.createElement("button");
-eraserButton.id = "eraser";
-eraserButton.innerHTML = "ERASER";
-eraserButton.addEventListener("click", eraserTool);
-menuBox.appendChild(eraserButton);
 
 function eraserTool() {
   imaNoIro = "none";
@@ -178,145 +197,60 @@ function eraserTool() {
     }
   });
 }
-//additional functions-end
-
-//sandbox-start
-
-let fillButton = document.createElement("button");
-fillButton.id = "fillButton";
-fillButton.innerHTML = "FILL";
-fillButton.addEventListener("click", function() {
-  let pixArr = document.querySelectorAll(".pixel");
-  for (i = 0; i < pixArr.length; i++) {
-    pixArr[i].addEventListener("click", fill);
-    pixArr[i].removeEventListener("mousedown", brush1);
-    pixArr[i].removeEventListener("mouseup", brush2);
-  }
-});
-menuBox.appendChild(fillButton);
 
 function fill() {
   let x = this.dataset.x;
-  let preSibling = this.previousSibling;
-  let nextSibling = this.nextSibling;
-  let upSibling = this.parentNode.previousSibling.childNodes[x];
-  let downSibling = this.parentNode.nextSibling.childNodes[x];
-  //hor-left
-  while (preSibling) {
-    if (preSibling.style.backgroundColor !== this.style.backgroundColor) {
-      preSibling = false;
-    } else {
-      preSibling.style.backgroundColor = imaNoIro;
-      let a = preSibling.dataset.x;
-      let thisUpSibling = preSibling.parentNode.previousSibling.childNodes[a];
-      while (thisUpSibling) {
-        if (
-          thisUpSibling.style.backgroundColor !== this.style.backgroundColor
-        ) {
-          thisUpSibling = false;
-        } else {
-          thisUpSibling.style.backgroundColor = imaNoIro;
-          if (thisUpSibling.parentNode.previousSibling) {
-            thisUpSibling =
-              thisUpSibling.parentNode.previousSibling.childNodes[a];
-          } else {
-            thisUpSibling = false;
-          }
-        }
-      }
-
-      let b = preSibling.dataset.x;
-      let thisDownSibling = preSibling.parentNode.nextSibling.childNodes[b];
-      while (thisDownSibling) {
-        if (
-          thisDownSibling.style.backgroundColor !== this.style.backgroundColor
-        ) {
-          thisDownSibling = false;
-        } else {
-          thisDownSibling.style.backgroundColor = imaNoIro;
-          if (thisDownSibling.parentNode.nextSibling) {
-            thisDownSibling =
-              thisDownSibling.parentNode.nextSibling.childNodes[b];
-          } else {
-            thisDownSibling = false;
-          }
-        }
-      }
-      preSibling = preSibling.previousSibling;
-    }
-  }
-  //hor-right
-  while (nextSibling) {
-    if (nextSibling.style.backgroundColor !== this.style.backgroundColor) {
-      nextSibling = false;
-    } else {
-      nextSibling.style.backgroundColor = imaNoIro;
-      let a = nextSibling.dataset.x;
-      let thisUpSibling = nextSibling.parentNode.previousSibling.childNodes[a];
-      while (thisUpSibling) {
-        if (
-          thisUpSibling.style.backgroundColor !== this.style.backgroundColor
-        ) {
-          thisUpSibling = false;
-        } else {
-          thisUpSibling.style.backgroundColor = imaNoIro;
-          if (thisUpSibling.parentNode.previousSibling) {
-            thisUpSibling =
-              thisUpSibling.parentNode.previousSibling.childNodes[a];
-          } else {
-            thisUpSibling = false;
-          }
-        }
-      }
-      let b = nextSibling.dataset.x;
-      let thisDownSibling = nextSibling.parentNode.nextSibling.childNodes[b];
-      while (thisDownSibling) {
-        if (
-          thisDownSibling.style.backgroundColor !== this.style.backgroundColor
-        ) {
-          thisDownSibling = false;
-        } else {
-          thisDownSibling.style.backgroundColor = imaNoIro;
-          if (thisDownSibling.parentNode.nextSibling) {
-            thisDownSibling =
-              thisDownSibling.parentNode.nextSibling.childNodes[b];
-          } else {
-            thisDownSibling = false;
-          }
-        }
-      }
-      nextSibling = nextSibling.nextSibling;
-    }
-  }
-  //vert-up
-  while (upSibling) {
-    if (upSibling.style.backgroundColor !== this.style.backgroundColor) {
-      upSibling = false;
-    } else {
-      upSibling.style.backgroundColor = imaNoIro;
-      if (upSibling.parentNode.previousSibling) {
-        upSibling = upSibling.parentNode.previousSibling.childNodes[x];
-      } else {
-        upSibling = false;
-      }
-    }
-  }
-  //vert-down
-  while (downSibling) {
-    if (downSibling.style.backgroundColor !== this.style.backgroundColor) {
-      downSibling = false;
-    } else {
-      downSibling.style.backgroundColor = imaNoIro;
-      if (downSibling.parentNode.nextSibling) {
-        downSibling = downSibling.parentNode.nextSibling.childNodes[x];
-      } else {
-        downSibling = false;
-      }
-    }
+  let endOfCanvas;
+  if (
+    this.previousSibling === null ||
+    this.previousSibling.style.backgroundColor !== maeNoIro
+  ) {
+    endOfCanvas = true;
+  } else {
+    this.previousSibling.style.backgroundColor = imaNoIro;
+    let nextFill = fill.bind(this.previousSibling);
+    nextFill();
   }
 
-  this.style.backgroundColor = imaNoIro;
+  if (
+    this.nextSibling === null ||
+    this.nextSibling.style.backgroundColor !== maeNoIro
+  ) {
+    endOfCanvas = true;
+  } else {
+    this.nextSibling.style.backgroundColor = imaNoIro;
+    let nextFill = fill.bind(this.nextSibling);
+    nextFill();
+  }
+
+  if (
+    this.parentNode.previousSibling === null ||
+    this.parentNode.previousSibling.childNodes[x].style.backgroundColor !==
+      maeNoIro
+  ) {
+    endOfCanvas = true;
+  } else {
+    this.parentNode.previousSibling.childNodes[
+      x
+    ].style.backgroundColor = imaNoIro;
+    let nextFill = fill.bind(this.parentNode.previousSibling.childNodes[x]);
+    nextFill();
+  }
+
+  if (
+    this.parentNode.nextSibling === null ||
+    this.parentNode.nextSibling.childNodes[x].style.backgroundColor !== maeNoIro
+  ) {
+    endOfCanvas = true;
+  } else {
+    this.parentNode.nextSibling.childNodes[x].style.backgroundColor = imaNoIro;
+    let nextFill = fill.bind(this.parentNode.nextSibling.childNodes[x]);
+    nextFill(this.parentNode.nextSibling.childNodes[x]);
+  }
 }
+//additional functions-end
+
+//sandbox-start
 //sandbox-end
 
 /*Things to add:
