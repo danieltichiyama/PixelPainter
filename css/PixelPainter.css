@@ -8,7 +8,6 @@ body {
   width: fit-content;
   height: fit-content;
   margin-bottom: 10px;
-\
 }
 
 .row {
@@ -21,18 +20,19 @@ body {
 .pixel {
   height: 10px;
   width: 10px;
-  background-color:none;
+  background-color: none;
   margin: 0 0 0 0;
 }
 
 #colorPicker {
-  height: 100px;
-  width: 200px;
+  height: fit-content;
+  width: fit-content;
   display: grid;
-  grid-template-columns: repeat(10, 20px);
+  grid-template-columns: repeat(8, 22px);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   padding: 1px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0);
+  margin-bottom: 20px;
 }
 
 button {
@@ -86,7 +86,9 @@ h1 {
 }
 
 .color {
-  border: white 1px solid;
+  height: 20px;
+  width: 20px;
+  margin: 1px;
 }
 
 #menuBox {
@@ -101,8 +103,4 @@ h1 {
 
 #menuBox button {
   margin-bottom: 10px;
-}
-
-#colorPicker {
-  margin-bottom: 20px;
 }

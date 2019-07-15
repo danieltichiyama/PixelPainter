@@ -102,22 +102,15 @@ const colorArray = [
   "#dddddd"
 ];
 
-for (let i = 0; i < 5; i++) {
-  for (let j = 0; j < 10; j++) {
-    let col = document.createElement("div");
-    col.className = "color";
-    col.id = i + "col" + j;
-    col.style.background =
-      colorArray[Math.floor(Math.random() * colorArray.length)];
-    col.addEventListener("click", atarashiColor);
-    colorPicker.appendChild(col);
-  }
+for (let i = 0; i < colorArray.length; i++) {
+  makeSwatch(colorArray[i]);
 }
 
 function atarashiColor() {
   imaNoIro = this.style.background;
 }
 // color-picker-end
+makeMenuButton("add color", "addColor", makeSwatch);
 
 let brushButton = document.createElement("button");
 brushButton.id = "brush";
@@ -187,6 +180,27 @@ function brush2() {
 }
 
 //additional functions-start
+
+function makeMenuButton(name, id, func) {
+  if (typeof name !== "string") {
+    console.log("error, name argument is not a string");
+  }
+  let button = document.createElement("button");
+  button.id = id;
+  button.innerHTML = name.toUpperCase();
+  button.addEventListener("click", func);
+  menuBox.appendChild(button);
+}
+
+function makeSwatch(color) {
+  let col = document.createElement("div");
+  col.className = "color";
+  col.id = color;
+  col.style.background = color;
+  col.addEventListener("click", atarashiColor);
+  colorPicker.appendChild(col);
+}
+
 function clearCanvas() {
   let pixArr = document.querySelectorAll(".pixel");
   for (let i = 0; i < pixArr.length; i++) {
