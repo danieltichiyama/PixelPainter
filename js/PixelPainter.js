@@ -83,16 +83,23 @@ colorPicker.id = "colorPicker";
 menuBox.appendChild(colorPicker);
 
 const colorArray = [
-  "red",
-  "blue",
-  "yellow",
-  "green",
-  "orange",
-  "purple",
-  "brown",
-  "black",
-  "white",
-  "pink"
+  "#ffffff",
+  "#001f3f",
+  "#0074d9",
+  "#7fdbff",
+  "#39cccc",
+  "#3d9970",
+  "#2ecc40",
+  "#01ff70",
+  "#ffdc00",
+  "#ff851b",
+  "#ff4136",
+  "#85144b",
+  "#f012be",
+  "#b10dc9",
+  "#111111",
+  "#aaaaaa",
+  "#dddddd"
 ];
 
 for (let i = 0; i < 5; i++) {
@@ -251,11 +258,11 @@ function fill() {
 //additional functions-end
 
 //sandbox-start
+
 //sandbox-end
 
 /*Things to add:
 1. a recall button (need to store the memory of all the .pixel background colors)
-2. a fill tool (it would propogate the color to other cells if they are not filled with a color already. up, down, left, and right);
 3. a checkered background (will need to figure out a way to do it with even-numbered dimensions, and also will need to update the clear function and the eraser)
 4. make it so the eraser doesn't exit out even if the cursor leaves the canvas.
 5. add special cursors for all the tools
