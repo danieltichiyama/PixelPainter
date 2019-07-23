@@ -1,4 +1,5 @@
 const pixelPainter = document.getElementById("pixelPainter");
+const funcMod = functionModule();
 
 //canvas sizing div-start
 const sizer = document.createElement("div");
@@ -27,49 +28,49 @@ heightInput.placeholder = 65;
 heightInput.value = 65;
 sizer.appendChild(heightInput);
 
-function getWAndH() {
-  pixelPainter.innerHTML = "";
-  if (widthInput.value === undefined || heightInput.value === undefined) {
-    alert("Please specify a width and a height");
-  }
-  createCanvas(widthInput.value, heightInput.value);
-}
+// function getWAndH() {
+//   pixelPainter.innerHTML = "";
+//   if (widthInput.value === undefined || heightInput.value === undefined) {
+//     alert("Please specify a width and a height");
+//   }
+//   createCanvas(widthInput.value, heightInput.value);
+// }--func works, delete
 
 const resizeButton = document.createElement("button");
 resizeButton.id = "resizeButton";
 resizeButton.innerHTML = "OK";
 resizeButton.addEventListener("click", function() {
-  getWAndH();
-  clearCanvas();
+  funcMod.getWAndH();
 });
 sizer.appendChild(resizeButton);
 
-function createCanvas(width, height) {
-  for (let i = 0; i < height; i++) {
-    let row = document.createElement("div");
-    row.className = "row";
-    row.id = i;
-    for (let j = 0; j < width; j++) {
-      let pix = document.createElement("div");
-      pix.className = "pixel";
-      pix.dataset.x = j;
-      pix.dataset.y = i;
-      pix.dataset.color = "none";
-      pix.id = "pixel" + j + "," + i;
-      row.appendChild(pix);
-    }
-    pixelPainter.appendChild(row);
-  }
-}
+funcMod.createCanvas(101, 65);
+
+// function createCanvas(width, height) {
+//   for (let i = 0; i < height; i++) {
+//     let row = document.createElement("div");
+//     row.className = "row";
+//     row.id = i;
+//     for (let j = 0; j < width; j++) {
+//       let pix = document.createElement("div");
+//       pix.className = "pixel";
+//       pix.dataset.x = j;
+//       pix.dataset.y = i;
+//       pix.dataset.color = "none";
+//       pix.id = "pixel" + j + "," + i;
+//       row.appendChild(pix);
+//     }
+//     pixelPainter.appendChild(row);
+//   }
+// }--func works, delete
 
 pixelPainter.addEventListener("mouseleave", function() {
   let pixArr = document.querySelectorAll(".pixel");
   for (let i = 0; i < pixArr.length; i++) {
-    pixArr[i].removeEventListener("mouseover", changeColor);
+    pixArr[i].removeEventListener("mouseover", funcMod.changeColor);
   }
 });
 
-createCanvas(101, 65);
 //canvas functionality-end
 
 //menu-start
@@ -103,32 +104,32 @@ const colorArray = [
 ];
 
 for (let i = 0; i < colorArray.length; i++) {
-  makeSwatch(colorArray[i]);
+  funcMod.makeSwatch(colorArray[i]);
 }
 
-function atarashiColor() {
-  imaNoIro = this.style.background;
-}
+// function atarashiColor() {
+//   imaNoIro = this.style.background;
+// }--
 // color-picker-end
-makeMenuButton("add color", "addColor", makeSwatch);
+funcMod.makeMenuButton("add color", "addColor", funcMod.makeSwatch);
 
 let brushButton = document.createElement("button");
 brushButton.id = "brush";
 brushButton.innerHTML = "BRUSH";
-brushButton.addEventListener("click", brush);
+brushButton.addEventListener("click", funcMod.brush);
 brushButton.removeEventListener("click", fill);
 menuBox.appendChild(brushButton);
 
 let clearButton = document.createElement("button");
 clearButton.id = "clear";
 clearButton.innerHTML = "CLEAR";
-clearButton.addEventListener("click", clearCanvas);
+clearButton.addEventListener("click", funcMod.clearCanvas);
 menuBox.appendChild(clearButton);
 
 let eraserButton = document.createElement("button");
 eraserButton.id = "eraser";
 eraserButton.innerHTML = "ERASER";
-eraserButton.addEventListener("click", eraserTool);
+eraserButton.addEventListener("click", funcMod.eraser);
 menuBox.appendChild(eraserButton);
 
 let fillButton = document.createElement("button");
@@ -141,8 +142,8 @@ fillButton.addEventListener("click", function() {
     pixArr[i].addEventListener("click", function() {
       maeNoIro = this.style.backgroundColor;
     });
-    pixArr[i].removeEventListener("mousedown", brush1);
-    pixArr[i].removeEventListener("mouseup", brush2);
+    pixArr[i].removeEventListener("mousedown", funcMod.brush1);
+    pixArr[i].removeEventListener("mouseup", funcMod.brush2);
   }
 });
 menuBox.appendChild(fillButton);
@@ -151,73 +152,73 @@ menuBox.appendChild(fillButton);
 let imaNoIro = "black";
 let maeNoIro = "";
 
-function changeColor() {
-  this.style.background = imaNoIro;
-}
+// function changeColor() {
+//   this.style.background = imaNoIro;
+// }--func works, delete
 
-function brush() {
-  let pixArr = document.querySelectorAll(".pixel");
-  for (i = 0; i < pixArr.length; i++) {
-    pixArr[i].addEventListener("mousedown", brush1);
-    pixArr[i].addEventListener("mouseup", brush2);
-  }
-}
+// function brush() {
+//   let pixArr = document.querySelectorAll(".pixel");
+//   for (i = 0; i < pixArr.length; i++) {
+//     pixArr[i].addEventListener("mousedown", funcMod.brush1);
+//     pixArr[i].addEventListener("mouseup", funcMod.brush2);
+//   }
+// }
 
-function brush1() {
-  let pixArr = document.querySelectorAll(".pixel");
-  for (let i = 0; i < pixArr.length; i++) {
-    pixArr[i].addEventListener("mouseover", changeColor);
-  }
-  this.style.background = imaNoIro;
-  this.dataset.color = imaNoIro;
-}
+// function brush1() {
+//   let pixArr = document.querySelectorAll(".pixel");
+//   for (let i = 0; i < pixArr.length; i++) {
+//     pixArr[i].addEventListener("mouseover", funcMod.changeColor);
+//   }
+//   this.style.background = imaNoIro;
+//   this.dataset.color = imaNoIro;
+// }
 
-function brush2() {
-  let pixArr = document.querySelectorAll(".pixel");
-  for (let i = 0; i < pixArr.length; i++) {
-    pixArr[i].removeEventListener("mouseover", changeColor);
-  }
-}
+// function brush2() {
+//   let pixArr = document.querySelectorAll(".pixel");
+//   for (let i = 0; i < pixArr.length; i++) {
+//     pixArr[i].removeEventListener("mouseover", funcMod.changeColor);
+//   }
+// }--func works, delete
 
 //additional functions-start
 
-function makeMenuButton(name, id, func) {
-  if (typeof name !== "string") {
-    console.log("error, name argument is not a string");
-  }
-  let button = document.createElement("button");
-  button.id = id;
-  button.innerHTML = name.toUpperCase();
-  button.addEventListener("click", func);
-  menuBox.appendChild(button);
-}
+// function makeMenuButton(name, id, func) {
+//   if (typeof name !== "string") {
+//     console.log("error, name argument is not a string");
+//   }
+//   let button = document.createElement("button");
+//   button.id = id;
+//   button.innerHTML = name.toUpperCase();
+//   button.addEventListener("click", func);
+//   menuBox.appendChild(button);
+// }--func works, delete **should make a class
 
-function makeSwatch(color) {
-  let col = document.createElement("div");
-  col.className = "color";
-  col.id = color;
-  col.style.background = color;
-  col.addEventListener("click", atarashiColor);
-  colorPicker.appendChild(col);
-}
+// function makeSwatch(color) {
+//   let col = document.createElement("div");
+//   col.className = "color";
+//   col.id = color;
+//   col.style.background = color;
+//   col.addEventListener("click", funcMod.newColor);
+//   colorPicker.appendChild(col);
+// }
 
-function clearCanvas() {
-  let pixArr = document.querySelectorAll(".pixel");
-  for (let i = 0; i < pixArr.length; i++) {
-    pixArr[i].style.background = "none";
-    pixArr[i].dataset.color = "none";
-  }
-}
+// function clearCanvas() {
+//   let pixArr = document.querySelectorAll(".pixel");
+//   for (let i = 0; i < pixArr.length; i++) {
+//     pixArr[i].style.background = "";
+//     pixArr[i].dataset.color = "";
+//   }
+// }--func works, delete
 
-function eraserTool() {
-  imaNoIro = "none";
-  pixelPainter.removeEventListener("mouseleave", function() {
-    let pixArr = document.querySelectorAll(".pixel");
-    for (let i = 0; i < pixArr.length; i++) {
-      pixArr[i].removeEventListener("mouseover", changeColor);
-    }
-  });
-}
+// function eraserTool() {
+//   imaNoIro = "";
+//   pixelPainter.removeEventListener("mouseleave", function() {
+//     let pixArr = document.querySelectorAll(".pixel");
+//     for (let i = 0; i < pixArr.length; i++) {
+//       pixArr[i].removeEventListener("mouseover", funcMod.changeColor);
+//     }
+//   });
+// }
 
 function fill() {
   let x = this.dataset.x;
